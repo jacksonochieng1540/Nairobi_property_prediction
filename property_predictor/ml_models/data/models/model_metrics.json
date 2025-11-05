@@ -1,0 +1,111 @@
+{
+    "individual_models": {
+        "random_forest": {
+            "train_mae": 19826445.91694876,
+            "test_mae": 43804216.889249995,
+            "train_rmse": 51353925.009679034,
+            "test_rmse": 93428896.12344977,
+            "train_r2": 0.7997661281809045,
+            "test_r2": 0.6799725869584832
+        },
+        "gradient_boosting": {
+            "train_mae": 2440970.3787232507,
+            "test_mae": 29006721.30085344,
+            "train_rmse": 13488253.705456654,
+            "test_rmse": 63169315.97312839,
+            "train_r2": 0.9861865642395508,
+            "test_r2": 0.853702436253537
+        },
+        "xgboost": {
+            "train_mae": 2603201.4401840493,
+            "test_mae": 25765897.10365854,
+            "train_rmse": 13516119.900655389,
+            "test_rmse": 51354175.418679506,
+            "train_r2": 0.9861294292644033,
+            "test_r2": 0.903311178651233
+        },
+        "lightgbm": {
+            "train_mae": 26029882.740499206,
+            "test_mae": 48060929.09462799,
+            "train_rmse": 52666156.57677596,
+            "test_rmse": 92408084.34608771,
+            "train_r2": 0.7894023542485131,
+            "test_r2": 0.6869276738151682
+        },
+        "catboost": {
+            "train_mae": 8093312.750050302,
+            "test_mae": 30944557.59019826,
+            "train_rmse": 16797896.419505555,
+            "test_rmse": 55472667.19983897,
+            "train_r2": 0.9785760247513808,
+            "test_r2": 0.8871808453305627
+        },
+        "ridge": {
+            "train_mae": 39176337.71409689,
+            "test_mae": 45335802.97430103,
+            "train_rmse": 55896788.68885427,
+            "test_rmse": 64099883.31148672,
+            "train_r2": 0.7627730767957054,
+            "test_r2": 0.8493603758302698
+        },
+        "lasso": {
+            "train_mae": 39297193.75813105,
+            "test_mae": 46272962.3834882,
+            "train_rmse": 55053668.132363275,
+            "test_rmse": 64911789.7238462,
+            "train_r2": 0.7698755406612168,
+            "test_r2": 0.8455201238274956
+        }
+    },
+    "ensemble": {
+        "train_mae": 11637122.591139758,
+        "test_mae": 33819414.69718144,
+        "train_rmse": 23159820.58430439,
+        "test_rmse": 58409897.92072468,
+        "train_r2": 0.9592750423529243,
+        "test_r2": 0.8749171868344255
+    },
+    "feature_importance": [
+        {
+            "feature": "propertyType_encoded",
+            "importance": 0.29393941164016724
+        },
+        {
+            "feature": "Land size",
+            "importance": 0.24069377779960632
+        },
+        {
+            "feature": "size_category_encoded",
+            "importance": 0.10820549726486206
+        },
+        {
+            "feature": "total_area",
+            "importance": 0.10468419641256332
+        },
+        {
+            "feature": "bathroom",
+            "importance": 0.05035512149333954
+        },
+        {
+            "feature": "Location_encoded",
+            "importance": 0.05004309117794037
+        },
+        {
+            "feature": "location_tier_encoded",
+            "importance": 0.043787695467472076
+        },
+        {
+            "feature": "has_land",
+            "importance": 0.0403384305536747
+        },
+        {
+            "feature": "Bedroom",
+            "importance": 0.037653304636478424
+        },
+        {
+            "feature": "bath_bed_ratio",
+            "importance": 0.018463648855686188
+        }
+    ],
+    "training_date": "2025-11-05 09:56:50"
+}

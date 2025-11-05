@@ -1,0 +1,421 @@
+<!-- nairobi_property_predictor/property_predictor/templates/property_predictor/result.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Results - Nairobi Property Predictor</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #2563eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --dark: #1f2937;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px 0;
+        }
+        
+        .result-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .result-header {
+            background: linear-gradient(135deg, var(--primary), #1e40af);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .price-display {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .price-range {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            margin-top: 10px;
+        }
+        
+        .confidence-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+        
+        .property-details {
+            padding: 40px;
+        }
+        
+        .detail-item {
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .detail-item:hover {
+            background: #f3f4f6;
+            transform: translateX(5px);
+        }
+        
+        .detail-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), #1e40af);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            margin-right: 20px;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        .detail-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .metric-card {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .metric-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        
+        .metric-label {
+            color: #6b7280;
+            font-weight: 500;
+            margin-top: 10px;
+        }
+        
+        .similar-property {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .similar-property:hover {
+            background: #f3f4f6;
+            transform: translateX(5px);
+        }
+        
+        .action-buttons {
+            padding: 30px 40px;
+            background: #f9fafb;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .btn-custom {
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--primary), #1e40af);
+            color: white;
+            border: none;
+        }
+        
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .progress-bar-custom {
+            height: 8px;
+            border-radius: 10px;
+            background: #e5e7eb;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), var(--primary));
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}" style="font-weight: 800; color: var(--primary);">
+                <i class="fas fa-home-lg-alt"></i> PropertyPredictor
+            </a>
+            <a href="{% url 'home' %}" class="btn btn-outline-primary">
+                <i class="fas fa-calculator"></i> New Prediction
+            </a>
+        </div>
+    </nav>
+
+    <div class="result-container">
+        <div class="result-card">
+            <!-- Header with Price -->
+            <div class="result-header">
+                <h1><i class="fas fa-chart-line"></i> Predicted Property Value</h1>
+                <div class="price-display">
+                    KSh {{ prediction.predicted_price|floatformat:0 }}
+                </div>
+                <div class="price-range">
+                    <i class="fas fa-arrows-alt-h"></i> 
+                    Range: {{ prediction.price_range_text }}
+                </div>
+                <div class="confidence-badge">
+                    <i class="fas fa-check-circle"></i> 
+                    {{ prediction.confidence_score|floatformat:0 }}% Confidence
+                </div>
+            </div>
+
+            <!-- Property Details -->
+            <div class="property-details">
+                <h3 class="section-title">
+                    <i class="fas fa-info-circle"></i> Property Details
+                </h3>
+                
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="detail-item">
+                            <div class="detail-icon"><i class="fas fa-building"></i></div>
+                            <div>
+                                <div class="detail-label">Property Type</div>
+                                <div class="detail-value">{{ prediction.property_type.name }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="detail-item">
+                            <div class="detail-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>
+                                <div class="detail-label">Location</div>
+                                <div class="detail-value">{{ prediction.location.name }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="detail-item">
+                            <div class="detail-icon"><i class="fas fa-bed"></i></div>
+                            <div>
+                                <div class="detail-label">Bedrooms</div>
+                                <div class="detail-value">{{ prediction.bedrooms }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="detail-item">
+                            <div class="detail-icon"><i class="fas fa-bath"></i></div>
+                            <div>
+                                <div class="detail-label">Bathrooms</div>
+                                <div class="detail-value">{{ prediction.bathrooms }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {% if prediction.house_size > 0 %}
+                    <div class="col-md-6">
+                        <div class="detail-item">
+                            <div class="detail-icon"><i class="fas fa-ruler-combined"></i></div>
+                            <div>
+                                <div class="detail-label">House Size</div>
+                                <div class="detail-value">{{ prediction.house_size|floatformat:0 }} m²</div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if prediction.land_size > 0 %}
+                    <div class="col-md-6">
+                        <div class="detail-item">
+                            <div class="detail-icon"><i class="fas fa-map"></i></div>
+                            <div>
+                                <div class="detail-label">Land Size</div>
+                                <div class="detail-value">{{ prediction.land_size|floatformat:0 }} m²</div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Key Metrics -->
+                <h3 class="section-title mt-5">
+                    <i class="fas fa-chart-bar"></i> Key Metrics
+                </h3>
+                
+                <div class="row g-3">
+                    {% if price_per_sqm %}
+                    <div class="col-md-4">
+                        <div class="metric-card">
+                            <div class="metric-value">KSh {{ price_per_sqm|floatformat:0 }}</div>
+                            <div class="metric-label">Price per m²</div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if market_insight %}
+                    <div class="col-md-4">
+                        <div class="metric-card">
+                            <div class="metric-value">KSh {{ market_insight.avg_price|floatformat:0 }}</div>
+                            <div class="metric-label">Market Average</div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="metric-card">
+                            <div class="metric-value">{{ market_insight.price_trend|title }}</div>
+                            <div class="metric-label">Price Trend</div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Similar Properties -->
+                {% if similar_properties %}
+                <h3 class="section-title mt-5">
+                    <i class="fas fa-home"></i> Similar Properties
+                </h3>
+                
+                {% for prop in similar_properties %}
+                <div class="similar-property">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <strong>{{ prop.property_type.name }}</strong> in {{ prop.location.name }}<br>
+                            <small class="text-muted">
+                                {{ prop.bedrooms }} bed | {{ prop.bathrooms }} bath
+                                {% if prop.house_size > 0 %}| {{ prop.house_size|floatformat:0 }} m²{% endif %}
+                            </small>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <strong style="color: var(--primary); font-size: 1.2rem;">
+                                KSh {{ prop.predicted_price|floatformat:0 }}
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <a href="{% url 'home' %}" class="btn btn-primary-custom btn-custom">
+                    <i class="fas fa-calculator"></i> New Prediction
+                </a>
+                <a href="{% url 'compare_properties' %}" class="btn btn-outline-primary btn-custom">
+                    <i class="fas fa-balance-scale"></i> Compare Properties
+                </a>
+                <button onclick="window.print()" class="btn btn-outline-secondary btn-custom">
+                    <i class="fas fa-print"></i> Print Results
+                </button>
+                <button onclick="shareResults()" class="btn btn-outline-success btn-custom">
+                    <i class="fas fa-share-alt"></i> Share
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function shareResults() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Property Price Prediction',
+                    text: 'Check out this property valuation: KSh {{ prediction.predicted_price|floatformat:0 }}',
+                    url: window.location.href
+                });
+            } else {
+                // Fallback - copy to clipboard
+                navigator.clipboard.writeText(window.location.href);
+                alert('Link copied to clipboard!');
+            }
+        }
+        
+        // Animate progress bar on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const confidence = {{ prediction.confidence_score|default:85 }};
+            const progressBar = document.querySelector('.progress-fill');
+            if (progressBar) {
+                setTimeout(() => {
+                    progressBar.style.width = confidence + '%';
+                }, 100);
+            }
+        });
+    </script>
+</body>
+</html>
