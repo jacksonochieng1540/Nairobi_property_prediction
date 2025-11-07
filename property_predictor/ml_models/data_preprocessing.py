@@ -303,3 +303,39 @@ if __name__ == "__main__":
         sample_df.to_csv(sample_data_dir / 'nairobi_properties.csv', index=False)
         print("Sample data created at: data/raw/nairobi_properties.csv")
         print("Please replace with your actual data and run again.")
+
+
+def advanced_feature_engineering(self, df):
+    """Extract more meaningful features"""
+    
+    # 1. Geospatial features (if lat/long available)
+    df['distance_to_cbd'] = self.calculate_distance_to_cbd(df)
+    df['distance_to_airport'] = self.calculate_distance_to_airport(df)
+    df['nearby_amenities_score'] = self.count_nearby_amenities(df)
+    
+    # 2. Time-based features
+    df['days_since_listing'] = (datetime.now() - df['created_at']).dt.days
+    df['is_weekend'] = df['created_at'].dt.dayofweek >= 5
+    df['month'] = df['created_at'].dt.month
+    df['quarter'] = df['created_at'].dt.quarter
+    
+    # 3. Property value indicators
+    df['price_per_bedroom'] = df['Price'] / df['Bedroom'].clip(lower=1)
+    df['price_per_bathroom'] = df['Price'] / df['bathroom'].clip(lower=1)
+    df['room_efficiency'] = df['House size'] / (df['Bedroom'] + df['bathroom'])
+    
+    # 4. Location interaction features
+    df['location_type_interaction'] = (
+        df['location_tier_encoded'] * df['propertyType_encoded']
+    )
+    
+    # 5. Polynomial features for important variables
+    df['bedrooms_squared'] = df['Bedroom'] ** 2
+    df['house_size_sqrt'] = np.sqrt(df['House size'])
+    
+    # 6. Market segment features
+    df['is_luxury'] = ((df['location_tier'] == 'Tier1_Premium') & 
+                       (df['Bedroom'] >= 4)).astype(int)
+    df['is_affordable'] = (df['Bedroom'] <= 2).astype(int)
+    
+    return df
