@@ -1,5 +1,3 @@
-# nairobi_property_predictor/property_predictor/admin.py
-
 from django.contrib import admin
 from django.utils.html import format_html
 from django.db.models import Avg, Count, Sum
@@ -15,8 +13,6 @@ from .models import (
     ModelMetrics, MarketInsight
 )
 
-
-# Customize Admin Site Headers
 admin.site.site_header = "Nairobi Property Predictor Admin"
 admin.site.site_title = "Property Predictor Admin"
 admin.site.index_title = "Property Price Prediction Management"
@@ -173,11 +169,11 @@ class PropertyPredictionAdmin(admin.ModelAdmin):
         if obj.confidence_score:
             score = obj.confidence_score * 100
             if score >= 85:
-                color = '#10b981'  # Green
+                color = '#10b981'  
             elif score >= 70:
-                color = '#f59e0b'  # Yellow
+                color = '#f59e0b'  
             else:
-                color = '#ef4444'  # Red
+                color = '#ef4444'  
             
             return format_html(
                 '<span style="background: {}; color: white; padding: 4px 10px; '
