@@ -1,5 +1,3 @@
-# nairobi_property_predictor/property_predictor/forms.py
-
 from django import forms
 from .models import PropertyPrediction, Location, PropertyType
 
@@ -70,13 +68,13 @@ class PropertyPredictionForm(forms.ModelForm):
         bedrooms = cleaned_data.get('bedrooms')
         bathrooms = cleaned_data.get('bathrooms')
         
-        # Validation: At least one size must be provided
+        
         if house_size == 0 and land_size == 0:
             raise forms.ValidationError(
                 "Please provide either house size or land size"
             )
         
-        # Validation: If bedrooms are specified, bathrooms should also be specified
+        
         if bedrooms > 0 and bathrooms == 0:
             self.add_error('bathrooms', 'Please specify number of bathrooms')
         
