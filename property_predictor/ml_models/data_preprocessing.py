@@ -249,7 +249,7 @@ class PropertyDataPreprocessor:
         Path(path).parent.mkdir(parents=True, exist_ok=True)
         
         joblib.dump({
-            'label_encoders': self.label_encoders,
+            'label_encoders': self.label_encoders, 
             'scaler': self.scaler,
             'feature_names': self.feature_names
         }, path)
