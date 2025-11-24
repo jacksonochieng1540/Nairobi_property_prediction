@@ -279,7 +279,7 @@ class PropertyPredictionAdmin(admin.ModelAdmin):
             created_at__gte=thirty_days_ago
         )
         
-        # Statistics
+    
         stats = {
             'total_predictions': PropertyPrediction.objects.count(),
             'recent_predictions': recent_predictions.count(),
@@ -291,7 +291,7 @@ class PropertyPredictionAdmin(admin.ModelAdmin):
             )['confidence_score__avg'] or 0,
         }
         
-        # Top locations
+        
         top_locations = PropertyPrediction.objects.values(
             'location__name'
         ).annotate(
@@ -299,7 +299,7 @@ class PropertyPredictionAdmin(admin.ModelAdmin):
             avg_price=Avg('predicted_price')
         ).order_by('-count')[:5]
         
-        # Top property types
+        
         top_types = PropertyPrediction.objects.values(
             'property_type__name'
         ).annotate(
