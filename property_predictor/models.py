@@ -1,5 +1,3 @@
-# nairobi_property_predictor/property_predictor/models.py
-
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils import timezone
@@ -53,7 +51,7 @@ class PropertyType(models.Model):
 class PropertyPrediction(models.Model):
     """Store prediction requests and results"""
     
-    # Input features
+
     property_type = models.ForeignKey(
         PropertyType,
         on_delete=models.SET_NULL,
@@ -83,7 +81,7 @@ class PropertyPrediction(models.Model):
         default=0
     )
     
-    # Prediction results
+  
     predicted_price = models.DecimalField(
         max_digits=15,
         decimal_places=2,
@@ -108,13 +106,13 @@ class PropertyPrediction(models.Model):
         blank=True
     )
     
-    # Metadata
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user_ip = models.GenericIPAddressField(null=True, blank=True)
     session_id = models.CharField(max_length=100, blank=True)
     
-    # User feedback
+
     user_rating = models.IntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(5)],
         null=True,
@@ -146,7 +144,7 @@ class ModelMetrics(models.Model):
     model_name = models.CharField(max_length=100)
     version = models.CharField(max_length=50)
     
-    # Metrics
+  
     train_mae = models.FloatField()
     test_mae = models.FloatField()
     train_rmse = models.FloatField()
@@ -154,7 +152,7 @@ class ModelMetrics(models.Model):
     train_r2 = models.FloatField()
     test_r2 = models.FloatField()
     
-    # Additional info
+  
     training_date = models.DateTimeField()
     total_samples = models.IntegerField()
     feature_count = models.IntegerField()
@@ -185,8 +183,7 @@ class MarketInsight(models.Model):
         null=True,
         blank=True
     )
-    
-    # Statistics
+ 
     avg_price = models.DecimalField(max_digits=15, decimal_places=2)
     median_price = models.DecimalField(max_digits=15, decimal_places=2)
     min_price = models.DecimalField(max_digits=15, decimal_places=2)
@@ -195,7 +192,7 @@ class MarketInsight(models.Model):
     
     sample_count = models.IntegerField()
     
-    # Trends
+   
     price_trend = models.CharField(
         max_length=20,
         choices=[
